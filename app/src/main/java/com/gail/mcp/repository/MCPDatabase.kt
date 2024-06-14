@@ -1,9 +1,12 @@
 package com.gail.mcp.repository
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.gail.mcp.model.MCPLocationData
 
+@Database(entities = [MCPLocationData::class], version = 1)
 abstract class MCPDatabase: RoomDatabase() {
 
     abstract fun MCPDao(): MCPDao
@@ -13,15 +16,17 @@ abstract class MCPDatabase: RoomDatabase() {
         private var INSTANCE: MCPDatabase? = null
 
         fun getDatabase(context: Context): MCPDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MCPDatabase::class.java,
-                    "MCPDatabase"
-                ).build()
-                INSTANCE = instance
-                instance
+            return INSTANCE ?: createDB(context).also {
+                INSTANCE = it
             }
+        }
+
+        private fun createDB(context: Context): MCPDatabase {
+            return Room.databaseBuilder(
+                context.applicationContext,
+                MCPDatabase::class.java,
+                "MCPDatabase"
+            ).build()
         }
     }
 }

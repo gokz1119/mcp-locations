@@ -27,7 +27,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.gail.mcp.R
+import com.gail.mcp.viewmodel.MCPViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import java.io.BufferedReader
@@ -36,7 +38,10 @@ import java.io.InputStreamReader
 @OptIn(ExperimentalPermissionsApi::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun FilePickerView() {
+fun FilePickerView(
+    viewModel: MCPViewModel,
+    navController: NavHostController
+) {
     val readStoragePermissionState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.READ_MEDIA_IMAGES,
@@ -84,7 +89,7 @@ fun FilePickerView() {
 
         result.value?.let { uri ->
             LaunchedEffect(key1 = uri) {
-                csvContent = readCsvFromUri(context, uri)
+                viewModel.loadMcpDataFromCSV(context, uri)
             }
         }
 

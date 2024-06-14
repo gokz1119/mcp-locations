@@ -77,4 +77,5 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
 }
