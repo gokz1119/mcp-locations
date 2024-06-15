@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    is MCPUiState.Error -> {}
+                    MCPUiState.Error -> {}
                 }
             }
         }

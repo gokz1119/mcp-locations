@@ -8,10 +8,8 @@ sealed class MCPUiState {
     data object Initial : MCPUiState()
 
     data class Success(
-        val mcpLocationData: List<MCPLocationData>
+        val mcpLocationData: MCPLocationData? = null
     ) : MCPUiState()
 
-    data class Error(
-        val exception: Exception
-    ) : MCPUiState()
+    data object Error : MCPUiState()
 }

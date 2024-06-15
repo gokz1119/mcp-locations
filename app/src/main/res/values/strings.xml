@@ -5,4 +5,6 @@
     <string name="enter_mcp_location_id">Enter MCP location ID</string>
     <string name="search_mcp_location">Search MCP Location</string>
     <string name="please_enter_a_location_id">Please enter a location ID</string>
+    <string name="uh_oh_couldnt_find_the_location">Uh-oh! Couldn\'t find the location</string>
+    <string name="the_mcp_is_located_at">The MCP %1$s is located at:</string>
 </resources>

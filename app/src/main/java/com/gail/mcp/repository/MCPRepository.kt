@@ -23,6 +23,10 @@ class MCPRepository(
         return mcpDao.getCount()
     }
 
+    suspend fun searchLocation(searchString: String): MCPLocationData? {
+        return mcpDao.searchLocation(searchString)
+    }
+
     fun readCsvFromUri(context: Context, uri: Uri): List<MCPLocationData> {
         val contentResolver = context.contentResolver
         val inputStream = contentResolver.openInputStream(uri)

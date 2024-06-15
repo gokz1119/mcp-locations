@@ -18,4 +18,7 @@ interface MCPDao {
     @Query("SELECT COUNT(*) FROM mcp_location")
     suspend fun getCount(): Int
 
+    @Query("SELECT * FROM mcp_location WHERE LOWER(locationId) = LOWER(:id)")
+    suspend fun searchLocation(id: String): MCPLocationData?
+
 }

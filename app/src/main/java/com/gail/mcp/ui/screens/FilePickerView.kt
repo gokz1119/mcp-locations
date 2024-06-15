@@ -1,7 +1,6 @@
-package com.gail.mcp.ui
+package com.gail.mcp.ui.screens
 
 import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -31,8 +30,6 @@ import com.gail.mcp.R
 import com.gail.mcp.viewmodel.MCPViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @OptIn(ExperimentalPermissionsApi::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -97,20 +94,4 @@ fun FilePickerView(
             }
         }
     }
-}
-
-fun readCsvFromUri(context: Context, uri: Uri): List<String> {
-    val contentResolver = context.contentResolver
-    val inputStream = contentResolver.openInputStream(uri)
-    val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-
-    val lines = mutableListOf<String>()
-    bufferedReader.use { reader ->
-        var line: String?
-        while (reader.readLine().also { line = it } != null) {
-            lines.add(line!!)
-        }
-    }
-
-    return lines
 }

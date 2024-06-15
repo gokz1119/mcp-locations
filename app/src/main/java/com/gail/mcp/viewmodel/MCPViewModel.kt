@@ -19,12 +19,17 @@ class MCPViewModel(application: Application): ViewModel() {
     private val _mcpHomeUiState: MutableStateFlow<MCPUiState> = MutableStateFlow(MCPUiState.Loading)
     val mcpHomeUiState: StateFlow<MCPUiState> = _mcpHomeUiState.asStateFlow()
 
+    private val _mcpSearchUiState: MutableStateFlow<MCPUiState> = MutableStateFlow(MCPUiState.Loading)
+    val mcpSearchUiState: StateFlow<MCPUiState> = _mcpSearchUiState.asStateFlow()
+
+    private val _searchString = MutableStateFlow("")
+    val searchString = _searchString.asStateFlow()
+
     init {
         viewModelScope.launch {
             val mcpCount = repository.getCount()
-            val mcpLocations = repository.getAllLocations()
             if (mcpCount > 0) {
-                _mcpHomeUiState.value = MCPUiState.Success(mcpLocations)
+                _mcpHomeUiState.value = MCPUiState.Success()
             } else {
                 _mcpHomeUiState.value = MCPUiState.Initial
             }
@@ -36,7 +41,23 @@ class MCPViewModel(application: Application): ViewModel() {
             _mcpHomeUiState.value = MCPUiState.Loading
             val mcpLocations = repository.readCsvFromUri(context, uri)
             repository.insertAll(mcpLocations)
-            _mcpHomeUiState.value = MCPUiState.Success(mcpLocations)
+            _mcpHomeUiState.value = MCPUiState.Success()
+        }
+    }
+
+    fun setSearchString(searchString: String) {
+        _searchString.value = searchString
+    }
+
+    fun searchMcpLocation(searchString: String) {
+        viewModelScope.launch {
+            _mcpSearchUiState.value = MCPUiState.Loading
+            val mcpLocation = repository.searchLocation(searchString)
+            mcpLocation?.let {
+                _mcpSearchUiState.value = MCPUiState.Success(mcpLocation)
+            } ?: run {
+                _mcpSearchUiState.value = MCPUiState.Error
+            }
         }
     }
 }
