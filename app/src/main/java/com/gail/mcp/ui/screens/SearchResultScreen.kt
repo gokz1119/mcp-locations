@@ -57,7 +57,12 @@ fun SearchResultScreen(
             }
 
             is MCPUiState.Error -> {
-                Text(text = stringResource(R.string.uh_oh_couldnt_find_the_location))
+                Text(
+                    text = stringResource(R.string.uh_oh_couldnt_find_the_location),
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp,
+                    lineHeight = 30.sp
+                )
             }
 
             is MCPUiState.Success -> {
