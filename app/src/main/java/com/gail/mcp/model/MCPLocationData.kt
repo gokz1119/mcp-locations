@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "mcp_location")
 data class MCPLocationData(
     @PrimaryKey val locationId: String = "",
-    val locationName: String = ""
+    val locationName: String = "",
+    val imageUrl: String = ""
 )

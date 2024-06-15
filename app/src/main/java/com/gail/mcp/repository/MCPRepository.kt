@@ -37,10 +37,20 @@ class MCPRepository(
             var line: String?
             while (reader.readLine().also { line = it } != null) {
                 val tokens = line?.split(",")
-                if (tokens != null && tokens.size == 2) {
+                if (tokens != null && tokens.size >= 2) {
                     val id = tokens[0].trim()
                     val name = tokens[1].trim()
-                    mcpLocations.add(MCPLocationData(id, name))
+                    var imageUrl = ""
+                    if (tokens.size == 3) {
+                        val imageUrlFromCsv = tokens[2].trim()
+                        if (imageUrlFromCsv.startsWith("https://drive.google.com/file/d/")) {
+                            val startIndex = imageUrlFromCsv.indexOf("/d/") + 3
+                            val endIndex = imageUrlFromCsv.indexOf("/", startIndex)
+                            val fileId = imageUrlFromCsv.substring(startIndex, endIndex)
+                            imageUrl = "https://drive.google.com/uc?id=$fileId"
+                        }
+                    }
+                    mcpLocations.add(MCPLocationData(id, name, imageUrl))
                 }
             }
         }
