@@ -15,6 +15,14 @@ class MCPRepository(
         mcpDao.insertAll(mcpLocations)
     }
 
+    suspend fun getAllLocations(): List<MCPLocationData> {
+        return mcpDao.getAllLocations()
+    }
+
+    suspend fun getCount(): Int {
+        return mcpDao.getCount()
+    }
+
     fun readCsvFromUri(context: Context, uri: Uri): List<MCPLocationData> {
         val contentResolver = context.contentResolver
         val inputStream = contentResolver.openInputStream(uri)

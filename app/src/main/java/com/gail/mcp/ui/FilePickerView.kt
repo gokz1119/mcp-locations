@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.gail.mcp.R
 import com.gail.mcp.viewmodel.MCPViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -39,8 +38,7 @@ import java.io.InputStreamReader
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun FilePickerView(
-    viewModel: MCPViewModel,
-    navController: NavHostController
+    viewModel: MCPViewModel
 ) {
     val readStoragePermissionState = rememberMultiplePermissionsState(
         permissions = listOf(

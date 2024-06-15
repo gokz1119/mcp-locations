@@ -6,8 +6,9 @@ sealed class MCPUiState {
     data object Loading : MCPUiState()
 
     data object Initial : MCPUiState()
+
     data class Success(
-        val mcpLocationData: MCPLocationData
+        val mcpLocationData: List<MCPLocationData>
     ) : MCPUiState()
 
     data class Error(
