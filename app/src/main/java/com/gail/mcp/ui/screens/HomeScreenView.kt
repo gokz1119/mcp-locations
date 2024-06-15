@@ -1,5 +1,8 @@
 package com.gail.mcp.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -94,6 +97,7 @@ fun HomeScreenView(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(50)),
             onClick = {
+                focusManager.clearFocus()
                 onSearchCliked(
                     viewModel = viewModel,
                     searchString = searchString,
@@ -109,14 +113,18 @@ fun HomeScreenView(
             )
         }
 
-        if (showError.value)
+        AnimatedVisibility(
+            visible = showError.value,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             Text(
                 modifier = Modifier
                     .padding(top = 16.dp),
                 text = stringResource(R.string.please_enter_a_location_id),
                 color = Color.Red
             )
-
+        }
     }
 }
 
