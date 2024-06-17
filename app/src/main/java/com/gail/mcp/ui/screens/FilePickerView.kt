@@ -35,7 +35,7 @@ fun FilePickerView(
         mutableStateOf<Uri?>(null)
     }
     var csvContent by remember { mutableStateOf<List<String>?>(null) }
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) {
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) {
         result.value = it
     }
 
@@ -56,7 +56,7 @@ fun FilePickerView(
                 .padding(8.dp)
                 .clip(RoundedCornerShape(50)),
             onClick = {
-                launcher.launch("*/*")
+                launcher.launch(arrayOf("text/csv", "text/comma-separated-values"))
             }
         ) {
             Text(
