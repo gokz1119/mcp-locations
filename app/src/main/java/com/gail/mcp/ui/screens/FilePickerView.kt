@@ -1,11 +1,8 @@
 package com.gail.mcp.ui.screens
 
-import android.Manifest
 import android.net.Uri
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,22 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gail.mcp.R
 import com.gail.mcp.viewmodel.MCPViewModel
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
-@OptIn(ExperimentalPermissionsApi::class)
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun FilePickerView(
     viewModel: MCPViewModel
 ) {
-    val readStoragePermissionState = rememberMultiplePermissionsState(
-        permissions = listOf(
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-            Manifest.permission.READ_MEDIA_AUDIO
-        )
-    )
     val context = LocalContext.current
     val result = remember {
         mutableStateOf<Uri?>(null)
@@ -70,10 +56,7 @@ fun FilePickerView(
                 .padding(8.dp)
                 .clip(RoundedCornerShape(50)),
             onClick = {
-                if (readStoragePermissionState.allPermissionsGranted)
-                    launcher.launch("*/*")
-                else
-                    readStoragePermissionState.launchMultiplePermissionRequest()
+                launcher.launch("*/*")
             }
         ) {
             Text(
